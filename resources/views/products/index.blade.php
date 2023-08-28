@@ -41,8 +41,9 @@
                     </td>
                     <td>
                         <form method="post" action="{{route('product.destroy', ['product' => $product])}}">
-                            @csrf 
-                            @method('delete')
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            {{ csrf_field() }}
                             <input type="submit" value="Delete" />
                         </form>
                     </td>

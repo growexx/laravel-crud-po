@@ -20,8 +20,7 @@
         @endif
     </div>
     <form method="post" action="{{route('product.store')}}">
-        @csrf
-        @method('post')
+    {{ csrf_field() }}
         <div>
             <label>Name</label>
             <input type="text" name="name" placeholder="Name" />

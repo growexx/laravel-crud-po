@@ -20,8 +20,9 @@
         @endif
     </div>
     <form method="post" action="{{route('product.update', ['product' => $product])}}">
-        @csrf
-        @method('put')
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    {{ csrf_field() }}
         <div>
             <label>Name</label>
             <input type="text" name="name" placeholder="Name" value="{{$product->name}}" />

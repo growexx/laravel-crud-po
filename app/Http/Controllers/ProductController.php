@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Product;
+use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
 
 class ProductController extends Controller
 {
     public function index(){
         $products = Product::all();
         return view('products.index', ['products' => $products]);
-        
     }
 
     public function create(){
@@ -18,14 +18,14 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        $data = $request->validate([
+        $this->validate($request,[
             'name' => 'required',
             'qty' => 'required|numeric',
-            'price' => 'required|decimal:0,2',
+            'price' => 'required',
             'description' => 'nullable'
         ]);
 
-        $newProduct = Product::create($data);
+        $newProduct = Product::create($request->all());
 
         return redirect(route('product.index'));
 
@@ -36,14 +36,14 @@ class ProductController extends Controller
     }
 
     public function update(Product $product, Request $request){
-        $data = $request->validate([
+        $this->validate($request,[
             'name' => 'required',
             'qty' => 'required|numeric',
-            'price' => 'required|decimal:0,2',
+            'price' => 'required',
             'description' => 'nullable'
         ]);
 
-        $product->update($data);
+        $product->update($request->all());
 
         return redirect(route('product.index'))->with('success', 'Product Updated Succesffully');
 
