@@ -1,45 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Create</title>
 </head>
-<body>
-    <h1>Create a Product</h1>
-    <div>
-        @if($errors->any())
-        <ul>
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
+<body style="background-image: url({{ asset('background.jpg') }});background-size: cover;">
+    <div class="wrapper d-flex align-items-stretch">
+    @include('nav', ['activePage' => 'create'])
+        <div class="container" style="padding: 5%;">
 
-
-        @endif
+            <form method="post" action="{{route('product.store')}}">
+            {{ csrf_field() }}
+                <div class="form-group row">
+                    <label for="name" class="col-sm-2 col-form-label">Name: </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="name" placeholder="Enter Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="qty" class="col-sm-2 col-form-label">Quantity: </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="qty" placeholder="Enter Quantity">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="price" class="col-sm-2 col-form-label">Price: </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="price" placeholder="Enter Price">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="price" class="col-sm-2 col-form-label">Description: </label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control" name="description" rows="3" placeholder="Enter Product Description"></textarea>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <input class="btn btn-primary" type="submit" value="Save a New Product" />
+                </div>
+            </form>
+            <div class="error">
+                @if($errors->any())
+                <ul>
+                    <div class="alert alert-danger" role="alert">
+                        @foreach($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </div>
+                </ul>
+                @endif
+            </div>
+        </div>
     </div>
-    <form method="post" action="{{route('product.store')}}">
-    {{ csrf_field() }}
-        <div>
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Name" />
-        </div>
-        <div>
-            <label>Qty</label>
-            <input type="text" name="qty" placeholder="Qty" />
-        </div>
-        <div>
-            <label>Price</label>
-            <input type="text" name="price" placeholder="Price" />
-        </div>
-        <div>
-            <label>Description</label>
-            <input type="text" name="description" placeholder="Description" />
-        </div>
-        <div>
-            <input type="submit" value="Save a New Product" />
-        </div>
-    </form>
 </body>
+<style>
+    label {
+        color: white;
+    }
+</style>
 </html>
